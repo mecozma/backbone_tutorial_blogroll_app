@@ -11,15 +11,25 @@ var Blog = Backbone.Model.extend({
 //Backbone Collection
 
 var Blogs = Backbone.Collection.extend({
-    model: new Blog(),
-    tagName: "tr",
-    initiate: function() {
-        this.template = _.template($(".blogs-list-template").html());
-    },
-    render: function() {
-        this.$el.html(this.model.toJSON());
-    }
+  
 });
+
+//Instantiate two Blog Models
+
+var blog1 = new Blog({
+    author: "Eduard",
+    title: "Eduard's Blog",
+    url: "http://www.eduard.com"
+});
+var blog2 = new Blog({
+    author: "Marius",
+    title: "Marius' Blog",
+    url: "http://.www.marius.com"
+});
+
+//Instantiate a collection
+
+var blogs = new Blogs([blog1, blog2]);
 
 //Backbone View for one Blog
 
@@ -27,7 +37,7 @@ var BlogView = Backbone.View.extend({
     model: new Blog(),
     tagName: 'tr',
     initialize: function() {
-        this.template = _.template($('.blog-list-template').html());
+        this.template = _.template($('.blogs-list-template').html());
     },
     render: function() {
             var attributes = this.model.toJSON();
@@ -54,22 +64,9 @@ var BlogsView = Backbone.View.extend({
     }
 });
 
-//Instantiate two Blog Models
 
-var blog1 = new Blog({
-    author: "Eduard",
-    title: "Eduard's Blog",
-    url: "http://www.eduard.com"
-});
-var blog2 = new Blog({
-    author: "Marius",
-    title: "Marius' Blog",
-    url: "http://.www.marius.com"
-});
 
-//Instantiate a collection
 
-var blogs = new Blogs([blog1, blog2]);
 
 //Instantiate BlogsView
 
@@ -82,7 +79,12 @@ $(document).ready(function() {
             title: $('.title-input').val(),
             url: $('.url-input').val()
         });
+        $('.author-input, .title-input, .url-input').val('');
         console.log(blog.toJSON());
         blogs.add(blog);
     });
 });
+
+
+
+
